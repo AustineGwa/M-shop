@@ -1,5 +1,6 @@
 package com.gwazasoftwares.uhcregistration;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.gwazasoftwares.uhcregistration.adapters.CartItemsAdapter;
+import com.gwazasoftwares.uhcregistration.models.ShopItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,32 +57,32 @@ public class ViewCart extends AppCompatActivity {
             }
         });
 
-//        progressDialog.show();
+        progressDialog.show();
 
-//        final List<RegData> regDataList = new ArrayList<>();
+        final List<ShopItem> cartItems  = new ArrayList<>();
 
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("kioko").child("uhc-registration");
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                regDataList.clear();
-//                for(DataSnapshot my_data : dataSnapshot.getChildren()){
-//                    RegData regData = my_data.getValue(RegData.class);
-//                    regDataList.add(regData);
-//                }
-//            }
-//
-//
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(getApplicationContext(),databaseError.getMessage(), Toast.LENGTH_LONG).show();
-//            }
-//        });
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("kioko").child("uhc-registration");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                cartItems.clear();
+                for(DataSnapshot my_data : dataSnapshot.getChildren()){
+                    ShopItem regData = my_data.getValue(ShopItem.class);
+                    cartItems.add(regData);
+                }
+            }
 
-//        adapter = new RegDataAdapter(regDataList);
-//        recyclerView.setAdapter(adapter);
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),databaseError.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+
+        adapter = new CartItemsAdapter(cartItems);
+        recyclerView.setAdapter(adapter);
         //progressDialog.dismiss();
 
     }

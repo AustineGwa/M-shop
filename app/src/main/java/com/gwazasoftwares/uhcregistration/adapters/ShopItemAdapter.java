@@ -4,17 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.gwazasoftwares.uhcregistration.R;
 import com.gwazasoftwares.uhcregistration.models.ShopItem;
-import com.gwazasoftwares.uhcregistration.utils.Functions;
 
 import java.util.List;
 
@@ -65,7 +68,17 @@ public class ShopItemAdapter extends RecyclerView.Adapter<ShopItemAdapter.ShopIt
             btnAddCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Functions.addItemToCart(context,getAdapterPosition());
+
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = firebaseDatabase.getReference("nathaniel").child("cart").child("user");
+                    ShopItem shopItem = shopItemList.get(getAdapterPosition());
+                    databaseReference.push().setValue(shopItem).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Toast.makeText(context,"item added to cart", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                 }
             });
         }
