@@ -7,18 +7,16 @@ public class UserOrder {
     private String name;
     private String hallOfResidence;
     private String room;
-    private String price;
-    private List<ShopItem> shopItemList;
+    private ShopItem shopItem;
 
     public UserOrder() {
     }
 
-    public UserOrder(String name, String hallOfResidence, String room, String price, List<ShopItem> shopItemList) {
+    public UserOrder(String name, String hallOfResidence, String room, ShopItem shopItem) {
         this.name = name;
         this.hallOfResidence = hallOfResidence;
         this.room = room;
-        this.price = price;
-        this.shopItemList = shopItemList;
+        this.shopItem = shopItem;
     }
 
     public String getName() {
@@ -45,19 +43,11 @@ public class UserOrder {
         this.room = room;
     }
 
-    public String getPrice() {
-        return price;
+    public ShopItem getShopItem() {
+        return shopItem;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public List<ShopItem> getShopItemList() {
-        return shopItemList;
-    }
-
-    public void setShopItemList(List<ShopItem> shopItemList) {
-        this.shopItemList = shopItemList;
+    public void setShopItem(ShopItem shopItem) {
+        this.shopItem = shopItem;
     }
 }

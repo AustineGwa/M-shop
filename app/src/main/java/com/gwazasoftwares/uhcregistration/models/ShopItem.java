@@ -3,7 +3,9 @@ package com.gwazasoftwares.uhcregistration.models;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ShopItem {
+import java.io.Serializable;
+
+public class ShopItem  implements Serializable {
     private int itemImage;
     private String itemName, itemPrice;
 

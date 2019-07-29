@@ -15,32 +15,31 @@ import java.util.List;
 
 public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.CartDataViewHolder> {
 
-    List<ShopItem> regDataList;
+    private List<ShopItem> shopItemList;
 
     public CartItemsAdapter(List<ShopItem> regDataList) {
-        this.regDataList = regDataList;
+        this.shopItemList = regDataList;
     }
 
     @NonNull
     @Override
     public CartDataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.reg_data_row, parent, false);
-        CartDataViewHolder regDataViewHolder = new CartDataViewHolder(view);
-        return regDataViewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_row, parent, false);
+        return new CartDataViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CartDataViewHolder holder, int position) {
-        holder.name.setText(regDataList.get(position).getItemName());
-        holder.price.setText(regDataList.get(position).getItemPrice());
+        holder.name.setText(shopItemList.get(position).getItemName());
+        holder.price.setText(shopItemList.get(position).getItemPrice());
        // holder.county.setText(regDataList.get(position).getCounty());
 
     }
 
     @Override
     public int getItemCount() {
-        return regDataList.size();
+        return shopItemList.size();
     }
 
 
@@ -50,8 +49,8 @@ public class CartItemsAdapter extends RecyclerView.Adapter<CartItemsAdapter.Cart
         public CartDataViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
-            price = itemView.findViewById(R.id.gender);
-           // image = itemView.findViewById(R.id.county);
+            price = itemView.findViewById(R.id.price);
+
         }
 
 

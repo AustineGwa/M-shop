@@ -58,7 +58,7 @@ public class SubmitOrder extends AppCompatActivity {
 
     public void submitDetails(){
         progressDialog.show();
-        UserOrder my_order = new UserOrder(name.getText().toString(),hallOfResidence.getText().toString(),room.getText().toString(),"1000", Arrays.asList(new ShopItem(),new ShopItem()));
+        UserOrder my_order = new UserOrder(name.getText().toString(),hallOfResidence.getText().toString(),room.getText().toString(), new ShopItem());
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();

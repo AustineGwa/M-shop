@@ -29,6 +29,9 @@ public class ViewCart extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
     ProgressDialog progressDialog;
     Button checkout;
+    ShopItem myItem;
+
+    List<ShopItem> cartItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,16 +43,19 @@ public class ViewCart extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         checkout = findViewById(R.id.checkout_button);
+        cartItems  = new ArrayList<>();
+        myItem = (ShopItem) getIntent().getSerializableExtra("shopItem");
 
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setCanceledOnTouchOutside(true);
-        progressDialog.setMessage("loading data from server ...");
+//        progressDialog = new ProgressDialog(this);
+//        progressDialog.setCanceledOnTouchOutside(true);
+//        progressDialog.setMessage("loading data from server ...");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
 
+        setupRecyclerView();
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,33 +63,15 @@ public class ViewCart extends AppCompatActivity {
             }
         });
 
-        progressDialog.show();
+        //progressDialog.show();
+    }
 
-        final List<ShopItem> cartItems  = new ArrayList<>();
+    private void setupRecyclerView() {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("kioko").child("uhc-registration");
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                cartItems.clear();
-                for(DataSnapshot my_data : dataSnapshot.getChildren()){
-                    ShopItem regData = my_data.getValue(ShopItem.class);
-                    cartItems.add(regData);
-                }
-            }
-
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getApplicationContext(),databaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
+        cartItems.clear();
+        cartItems.add(myItem);
         adapter = new CartItemsAdapter(cartItems);
         recyclerView.setAdapter(adapter);
-        //progressDialog.dismiss();
 
     }
 }

@@ -2,6 +2,7 @@ package com.gwazasoftwares.uhcregistration;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -36,13 +37,13 @@ public class ShopHome extends AppCompatActivity {
         setContentView(R.layout.activity_shop_home);
 
         recyclerview = findViewById(R.id.items_rv);
-        recyclerview.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        recyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerview.setHasFixedSize(true);
 
         shopItemList = new ArrayList<>();
-        ShopItem item1 = new ShopItem(R.drawable.mandazi,"Fresh mazi","Ksh 5");
+        ShopItem item1 = new ShopItem(R.drawable.mandazi,"Fresh mandazi","Ksh 5");
         ShopItem item2 = new ShopItem(R.drawable.tea,"Milk tea","Ksh 15");
-        ShopItem item3 = new ShopItem(R.drawable.mandazi,"Fresh mazi","Ksh 5");
+        ShopItem item3 = new ShopItem(R.drawable.mandazi,"Fresh mandazi","Ksh 5");
         ShopItem item4 = new ShopItem(R.drawable.tea,"Milk tea","Ksh 15");
 
         shopItemList.addAll(Arrays.asList(item1,item2,item3,item4));
