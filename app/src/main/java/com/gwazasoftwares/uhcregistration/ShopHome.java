@@ -56,12 +56,15 @@ public class ShopHome extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
+        if(item.getItemId() == R.id.adm){
+            startActivity(new Intent(getApplicationContext(),Login.class));
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 
