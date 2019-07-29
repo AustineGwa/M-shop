@@ -27,7 +27,7 @@ public class ViewCart extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     Button checkout;
     ShopItem myItem;
 
@@ -59,7 +59,9 @@ public class ViewCart extends AppCompatActivity {
         checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), SubmitOrder.class));
+                Intent intent = new Intent(getApplicationContext(), SubmitOrder.class);
+                intent.putExtra("my_order",myItem);
+                startActivity(intent);
             }
         });
 

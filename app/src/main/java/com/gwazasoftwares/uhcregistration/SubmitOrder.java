@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,7 +38,7 @@ public class SubmitOrder extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Sending data to Server...");
+        progressDialog.setMessage("Submiting order...");
 
     }
 
@@ -58,11 +56,13 @@ public class SubmitOrder extends AppCompatActivity {
 
     public void submitDetails(){
         progressDialog.show();
-        UserOrder my_order = new UserOrder(name.getText().toString(),hallOfResidence.getText().toString(),room.getText().toString(), new ShopItem());
+        ShopItem shopItem = (ShopItem) getIntent().getSerializableExtra("my_order");
+        UserOrder my_order = new UserOrder(name.getText().toString(),hallOfResidence.getText().toString(),room.getText().toString(),shopItem);
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("nathan").child("m-shop");
+        DatabaseReference myRef = database.getReference("nathan").child("m-shop").child("orders");
+
 
         myRef.push().setValue(my_order).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -70,6 +70,7 @@ public class SubmitOrder extends AppCompatActivity {
                 if(task.isSuccessful()) {
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Order sent successfully please wait for your meal", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getApplicationContext(),ShopHome.class));
                 }else{
                     progressDialog.dismiss();
                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -79,4 +80,6 @@ public class SubmitOrder extends AppCompatActivity {
 
 
     }
+
+
 }

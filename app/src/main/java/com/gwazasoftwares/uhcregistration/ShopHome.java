@@ -62,11 +62,6 @@ public class ShopHome extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        int id = item.getItemId();
-
-        if(id == R.id.mycart){
-            startActivity(new Intent(getApplicationContext(), ViewCart.class));
-        }
         return super.onOptionsItemSelected(item);
     }
 
